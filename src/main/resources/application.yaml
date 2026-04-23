@@ -11,18 +11,17 @@ spring:
       enabled: ALWAYS
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/omniverse
-    username: postgres
-    password: admin123
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
-    open-in-view: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 logging:
   pattern:
