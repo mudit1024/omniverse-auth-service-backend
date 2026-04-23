@@ -6,6 +6,7 @@ import com.omniverse.auth_Service.dto.RegisterRequest;
 import com.omniverse.auth_Service.dto.RegisterResponse;
 import com.omniverse.auth_Service.entity.User;
 import com.omniverse.auth_Service.repository.UserRepository;
+import com.omniverse.auth_Service.security.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,18 +15,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
+    private final JwtService jwtService;
     Logger logger = LoggerFactory.getLogger(AuthService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder,
+                       JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-}
-
+        this.jwtService = jwtService;
+    }
     public RegisterResponse register(RegisterRequest request) {
 
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
         String hashedPassword = passwordEncoder.encode(request.getPassword());
 
         // 1. Convert DTO → Entity
@@ -70,9 +76,13 @@ public class AuthService {
         // 3. Success
         logger.info("User logged in successfully: {}", user.getEmail());
 
+        String token = jwtService.generateToken(user.getId(), user.getEmail());
+
+        //4.  Generate JWT
         LoginResponse response = new LoginResponse();
         response.setMessage("Login successful");
         response.setUsername(user.getUsername());
+        response.setToken(token);
 
         return response;
     }
