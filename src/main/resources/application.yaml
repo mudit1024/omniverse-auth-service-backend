@@ -4,6 +4,7 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+
   datasource:
     url: jdbc:postgresql://localhost:5432/omniverse
     username: postgres
@@ -16,6 +17,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
 logging:
   pattern:
     console: "%d{HH:mm:ss} [%level] %logger{36} - %msg%n"
+
+jwt:
+  secret: your_super_secret_key_which_is_long
+  expiration: 3600000

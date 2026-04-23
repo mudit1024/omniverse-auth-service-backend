@@ -4,7 +4,15 @@ public class LoginResponse {
 
     private String message;
     private String username;
+    private String token;
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
     // later we will add JWT here
 
     public String getMessage() {
