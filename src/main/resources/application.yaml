@@ -2,6 +2,8 @@ server:
   port: ${PORT:8080}
   address: 0.0.0.0
 spring:
+  main:
+    lazy-initialization: true
   application:
     name: auth-Service
   output:
@@ -20,6 +22,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    open-in-view: false
 
 logging:
   pattern:
