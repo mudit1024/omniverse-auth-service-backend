@@ -16,4 +16,9 @@ public class HelloController {
                 .getPrincipal();
         return "Hello OmniVerse🚀 "+email+" you are authenticated";
     }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong";
+    }
 }
