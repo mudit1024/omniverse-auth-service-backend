@@ -28,12 +28,16 @@ public class AuthController {
     @PostMapping("/register")
     public RegisterResponse  register(@Valid @RequestBody RegisterRequest request) {
 
+        logger.info("🔥 REGISTER API HIT on Render");
+        logger.info("Request received: {}", request.getEmail());
         return authService.register(request);
     }
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {
-
+        logger.info("🔥 REGISTER API HIT on Render");
+        logger.info("Request received: {}", request.getEmail());
+        
         logger.info("Login attempt for email: {}", request.getEmail());
 
         return authService.login(request);
