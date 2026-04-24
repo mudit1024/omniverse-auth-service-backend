@@ -1,0 +1,33 @@
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+spring:
+  main:
+    lazy-initialization: true
+  application:
+    name: auth-Service
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/omniverse
+    username: postgres
+    password: admin123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss} [%level] %logger{36} - %msg%n"
+
+jwt:
+  secret: your_super_secret_key_which_is_long
+  expiration: 3600000

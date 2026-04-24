@@ -1,14 +1,13 @@
 server:
   port: ${PORT:8080}
   address: 0.0.0.0
+
 spring:
   main:
     lazy-initialization: true
+
   application:
     name: auth-Service
-  output:
-    ansi:
-      enabled: ALWAYS
 
   datasource:
     url: ${DB_URL}
@@ -18,15 +17,20 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: false   # 🔥 disable logs in prod
     properties:
       hibernate:
+        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
 
 logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG   # 🔥 for debugging your 403
   pattern:
     console: "%d{HH:mm:ss} [%level] %logger{36} - %msg%n"
 
 jwt:
-  secret: your_super_secret_key_which_is_long
+  secret: ${JWT_SECRET}
   expiration: 3600000
