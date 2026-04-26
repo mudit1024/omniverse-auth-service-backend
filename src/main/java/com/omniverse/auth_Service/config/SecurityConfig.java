@@ -25,7 +25,8 @@ public class SecurityConfig {
                 .cors(cors -> {})
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll() // public
-                .anyRequest().authenticated() // protected
+                    .requestMatchers("/health").permitAll()
+                    .anyRequest().authenticated() // protected
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
